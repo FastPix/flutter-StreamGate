@@ -27,9 +27,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   int retryCount = 0;
   final int maxRetries = 3;
 
-  
   // VIDEO STREAM URL (FOR PLAYER ONLY)
-
   String getStreamUrl() {
     if (widget.playbackId == null || widget.playbackId!.isEmpty) {
       throw Exception("PlaybackId missing");
@@ -38,14 +36,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return "https://stream.fastpix.io/${widget.playbackId}.m3u8";
   }
 
-  
   // SHARE URL (FOR WHATSAPP / CHROME / WEB)
-  
   String getShareUrl() {
     if (widget.playbackId == null || widget.playbackId!.isEmpty) {
       throw Exception("PlaybackId missing");
     }
-
     return "https://play.fastpix.io/?playbackId=${widget.playbackId}"
         "&muted=false"
         "&hide-controls=false"
@@ -53,9 +48,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         "&primary-color=ffffff";
   }
 
-  
   // INIT PLAYER
-  
   Future<void> initializePlayer() async {
     if (!mounted) return;
 
@@ -63,12 +56,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       isLoading = true;
       hasError = false;
     });
-
     try {
       final url = getStreamUrl();
 
       AppLogger.log("🎬 STREAM URL: $url");
-
       videoController?.dispose();
       chewieController?.dispose();
 
@@ -77,7 +68,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       );
 
       await videoController!.initialize();
-
       chewieController = ChewieController(
         videoPlayerController: videoController!,
         autoPlay: true,
@@ -94,7 +84,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         hasError = false;
       });
     } catch (e) {
-      AppLogger.log("❌ Player error: $e");
+      AppLogger.log("Player error: $e");
 
       retryCount++;
 
@@ -107,7 +97,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       }
 
       if (!mounted) return;
-
       setState(() {
         isLoading = false;
         hasError = true;
@@ -115,9 +104,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
   }
 
-  
   // COPY SHARE URL
-  
   void copyUrl() {
     Clipboard.setData(
       ClipboardData(
@@ -132,15 +119,47 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 
-  
   // SHARE VIDEO
-  
-  Future<void> shareUrl() async {
+ Future<void> shareUrl() async {
+
+  try {
+
+    final url = getShareUrl();
+
+    final box =
+        context.findRenderObject() as RenderBox?;
+
     await Share.share(
-      getShareUrl(),
-      subject: "Watch this video",
+
+      "Watch this video:\n$url",
+
+      subject: "StreamGate Video",
+
+      sharePositionOrigin:
+          box!.localToGlobal(Offset.zero) &
+          box.size,
+    );
+
+  } catch (e) {
+
+    AppLogger.log(
+      " SHARE ERROR: $e",
+    );
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+
+      SnackBar(
+
+        content: Text(
+          "Share failed: $e",
+        ),
+      ),
     );
   }
+}
 
   @override
   void initState() {
@@ -156,16 +175,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.dispose();
   }
 
-  
   // PLAYER UI
-  
   Widget buildPlayer() {
     if (isLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
-
     if (hasError ||
         videoController == null ||
         !videoController!.value.isInitialized ||
@@ -187,7 +203,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         ],
       );
     }
-
     return Chewie(
       controller: chewieController!,
     );
@@ -215,14 +230,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  getShareUrl(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 11,
-                  ),
-                ),
+                
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -254,3 +262,4 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 }
+

@@ -1,28 +1,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 🌐 INTERNET -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- INTERNET -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- 📹 CAMERA + MIC -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- CAMERA + MIC -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <!-- 📱 SCREEN RECORDING -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
+    <!-- SCREEN RECORDING -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- FIX: FOREGROUND_SERVICE_MEDIA_PROJECTION is required on API 34+
+         alongside the foregroundServiceType="mediaProjection" in the service tag -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 
-    <!-- 📦 STORAGE -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"/>
+    <!-- STORAGE -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
-    <!-- NOTIFICATIONS (Android 13+) -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- NOTIFICATIONS (required to show foreground service notification on API 33+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:label="streamgate_flutter"
-        android:name="${applicationName}"
+        android:label="StreamGate"
         android:icon="@mipmap/launcher_icon">
 
         <activity
@@ -36,18 +40,22 @@
 
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"/>
+                android:resource="@style/NormalTheme" />
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
 
-        <!-- 🔥 IMPORTANT: REQUIRED FOR SCREEN RECORDING -->
+        <!--
+            FIX: foregroundServiceType must be "mediaProjection" (or include it).
+            On API 34+ this is enforced at runtime — the manifest MUST declare this type
+            or startForeground() throws an IllegalArgumentException / SecurityException.
+        -->
         <service
-            android:name="com.llfbandit.screenrecording.ScreenRecordingService"
+            android:name=".ScreenRecordService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 
@@ -59,8 +67,8 @@
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
         </intent>
     </queries>
 

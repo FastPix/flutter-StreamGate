@@ -26,7 +26,7 @@ class FastPixUploadService {
     required this.secretKey,
   });
 
-  // ---------------- CREATE SESSION ----------------
+  //  CREATE SESSION 
   Future<Map<String, dynamic>> createUploadSession() async {
     final auth = "Basic ${base64Encode(utf8.encode('$tokenId:$secretKey'))}";
 
@@ -66,7 +66,7 @@ class FastPixUploadService {
     };
   }
 
-  // ---------------- UPLOAD FILE ----------------
+  //  UPLOAD FILE 
   Future<String> uploadFile({
     required String filePath,
     required Function(double progress) onProgress,
@@ -82,7 +82,7 @@ class FastPixUploadService {
 
     final bytes = await _lastFile!.readAsBytes();
 
-    AppLogger.log("🟢 UPLOADING TO:");
+    AppLogger.log("UPLOADING TO:");
     AppLogger.log(uploadUrl);
     AppLogger.log("FILE SIZE: ${bytes.length}");
 
@@ -111,7 +111,7 @@ class FastPixUploadService {
     return uploadId;
   }
 
-  // ---------------- PLAYBACK POLLING ----------------
+  // PLAYBACK POLLING 
   Future<String> getPlaybackId(String mediaId) async {
     final auth = "Basic ${base64Encode(utf8.encode('$tokenId:$secretKey'))}";
 
@@ -144,22 +144,20 @@ class FastPixUploadService {
             final playbackId = playbackIds[0]["id"];
 
             if (status == "Ready") {
-              AppLogger.log("✅ PLAYBACK READY: $playbackId");
+              AppLogger.log(" PLAYBACK READY: $playbackId");
               return playbackId;
             }
           }
         }
       } catch (e) {
-        AppLogger.log("❌ Poll error: $e");
+        AppLogger.log(" Poll error: $e");
       }
-
       await Future.delayed(const Duration(seconds: 3));
     }
-
     throw Exception("Playback not ready after timeout");
   }
 
-  // ---------------- CONTROL METHODS ----------------
+  // CONTROL METHODS 
 
   void pause() {
     AppLogger.log("⏸ Upload paused (canceled current request)");
@@ -172,7 +170,7 @@ class FastPixUploadService {
 
   Future<void> resume(Function(double progress) onProgress) async {
     if (_lastFile == null) {
-      AppLogger.log("❌ Nothing to resume");
+      AppLogger.log(" Nothing to resume");
       return;
     }
 
@@ -185,7 +183,7 @@ class FastPixUploadService {
   }
 
   void abort() {
-    AppLogger.log("🛑 Upload aborted permanently");
+    AppLogger.log(" Upload aborted permanently");
 
     _isPaused = false;
     _cancelToken?.cancel("aborted");

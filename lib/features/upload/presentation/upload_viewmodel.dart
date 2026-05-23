@@ -16,7 +16,7 @@ class UploadViewModel extends ChangeNotifier {
 
   Future<void> uploadVideo(String filePath) async {
     try {
-      // 🔵 BEFORE UPLOAD
+      //  BEFORE UPLOAD
       AppLogger.log("🚀 Starting upload...");
       AppLogger.log("📁 File path: $filePath");
 
@@ -33,26 +33,26 @@ class UploadViewModel extends ChangeNotifier {
         },
       );
 
-      // 🟢 AFTER UPLOAD
+      //  AFTER UPLOAD
       AppLogger.log("📦 Upload completed");
       AppLogger.log("📦 Upload ID: $uploadId");
 
       status = UploadStatus.processing;
       notifyListeners();
 
-      // 🟡 BEFORE PLAYBACK FETCH
+      //  BEFORE PLAYBACK FETCH
       AppLogger.log("🎬 Fetching playback ID...");
 
       playbackId = await service.getPlaybackId(uploadId!);
 
-      // 🟢 SUCCESS
-      AppLogger.log("✅ Playback ID received: $playbackId");
+      // SUCCESS
+      AppLogger.log("Playback ID received: $playbackId");
 
       status = UploadStatus.success;
       notifyListeners();
     } catch (e) {
-      // 🔴 ERROR LOGGING
-      AppLogger.log("❌ Upload/ViewModel Error: $e");
+      //  ERROR LOGGING
+      AppLogger.log(" Upload/ViewModel Error: $e");
 
       status = UploadStatus.failed;
       errorMessage = e.toString();

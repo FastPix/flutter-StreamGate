@@ -6,7 +6,7 @@ import '../../upload/presentation/upload_screen.dart';
 class RecordScreen extends StatelessWidget {
   const RecordScreen({super.key});
 
-  // 📹 CAMERA FLOW (unchanged, but now consistent)
+  // CAMERA FLOW 
   void openCamera(BuildContext context) {
     Navigator.push(
       context,
@@ -16,17 +16,18 @@ class RecordScreen extends StatelessWidget {
     );
   }
 
-  // 📱 SCREEN RECORDING → NOW RETURNS PATH → AUTO UPLOAD
+  // SCREEN RECORDING (Unified Controller Pathway)
   void openScreenRecorder(BuildContext context) async {
-    final path = await Navigator.push(
+    //  Fixed Navigation Conflict: Await path from pop, do not push Upload from child screen
+    final String? path = await Navigator.push<String>(
       context,
       MaterialPageRoute(
         builder: (_) => const ScreenRecordScreen(),
       ),
     );
 
-    // 🚀 IF RECORDING RETURNS FILE PATH → START UPLOAD FLOW
-    if (path != null && context.mounted) {
+    // IF RECORDING RETURNS FILE PATH -> START UPLOAD FLOW
+    if (path != null && path.isNotEmpty && context.mounted) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -47,20 +48,25 @@ class RecordScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 📹 CAMERA RECORDING
-            ElevatedButton.icon(
-              icon: const Icon(Icons.videocam),
-              label: const Text("Record Camera Video"),
-              onPressed: () => openCamera(context),
+            // CAMERA RECORDING
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.videocam),
+                label: const Text("Record Camera Video"),
+                onPressed: () => openCamera(context),
+              ),
             ),
-
             const SizedBox(height: 20),
 
-            // 📱 SCREEN RECORDING
-            ElevatedButton.icon(
-              icon: const Icon(Icons.screen_share),
-              label: const Text("Record Screen"),
-              onPressed: () => openScreenRecorder(context),
+            //  SCREEN RECORDING
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.screen_share),
+                label: const Text("Record Screen"),
+                onPressed: () => openScreenRecorder(context),
+              ),
             ),
           ],
         ),

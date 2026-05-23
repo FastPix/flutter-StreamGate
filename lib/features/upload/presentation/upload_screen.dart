@@ -37,8 +37,8 @@ class _UploadScreenState extends State<UploadScreen> {
       if (mounted) setState(() {});
     });
 
-    AppLogger.log("🔥 UploadScreen INIT");
-    AppLogger.log("📁 Received filePath: ${widget.filePath}");
+    AppLogger.log(" UploadScreen INIT");
+    AppLogger.log("Received filePath: ${widget.filePath}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _triggerAutoUpload();
@@ -52,12 +52,12 @@ class _UploadScreenState extends State<UploadScreen> {
     final path = widget.filePath;
 
     if (path == null || path.isEmpty) {
-      AppLogger.log("⚠️ No filePath received — upload skipped");
+      AppLogger.log("No filePath received — upload skipped");
       return;
     }
 
-    AppLogger.log("🚀 Auto upload triggered");
-    AppLogger.log("📁 File: $path");
+    AppLogger.log(" Auto upload triggered");
+    AppLogger.log(" File: $path");
 
     viewModel.uploadVideo(path);
   }
@@ -80,7 +80,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
       await viewModel.uploadVideo(file.path);
     } catch (e) {
-      AppLogger.log("❌ PICK VIDEO ERROR: $e");
+      AppLogger.log("PICK VIDEO ERROR: $e");
     }
   }
 

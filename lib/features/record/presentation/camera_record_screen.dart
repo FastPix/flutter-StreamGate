@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-
 import '../../upload/presentation/upload_screen.dart';
 
 class CameraRecordScreen extends StatefulWidget {
@@ -10,7 +9,6 @@ class CameraRecordScreen extends StatefulWidget {
   @override
   State<CameraRecordScreen> createState() => _CameraRecordScreenState();
 }
-
 class _CameraRecordScreenState extends State<CameraRecordScreen> {
   CameraController? controller;
   List<CameraDescription>? cameras;
@@ -50,7 +48,7 @@ class _CameraRecordScreenState extends State<CameraRecordScreen> {
       recordedFile = file;
     });
 
-    // 🔥 IMPORTANT: AUTO GO TO UPLOAD FLOW
+    // AUTO GO TO UPLOAD FLOW
 
     final filePath = recordedFile!.path;
     Navigator.pushReplacement(

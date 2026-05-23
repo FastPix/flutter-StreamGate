@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../upload/presentation/upload_screen.dart';
 import '../../record/presentation/record_screen.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

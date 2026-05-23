@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-
 <plist version="1.0">
 <dict>
-
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+
+	<key>LSApplicationQueriesSchemes</key>
+     <array>
+       <string>https</string>
+       <string>http</string>
+     </array>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -40,68 +44,53 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
-	<!-- CAMERA -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+
 	<key>NSCameraUsageDescription</key>
-	<string>
-	StreamGate needs camera access to record videos.
-	</string>
+	<string>StreamGate needs camera access to record videos.</string>
 
-	<!-- MICROPHONE -->
 	<key>NSMicrophoneUsageDescription</key>
-	<string>
-	StreamGate needs microphone access for video audio recording.
-	</string>
+	<string>StreamGate needs microphone access for video audio recording.</string>
 
-	<!-- PHOTO LIBRARY READ -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>
-	StreamGate needs access to your gallery to upload videos.
-	</string>
+	<string>StreamGate needs access to your gallery to upload videos.</string>
 
-	<!-- PHOTO LIBRARY WRITE -->
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>
-	StreamGate may save recorded videos to your gallery.
-	</string>
+	<string>StreamGate may save recorded videos to your gallery.</string>
 
-	<!-- MEDIA ACCESS -->
 	<key>NSAppleMusicUsageDescription</key>
-	<string>
-	StreamGate may access media while recording videos.
-	</string>
+	<string>StreamGate may access media while recording videos.</string>
+
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>com.apple.ReplayKit.VideoRecording</string>
+	</array>
 
 	<key>UIApplicationSceneManifest</key>
 	<dict>
-
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
-
 		<key>UISceneConfigurations</key>
 		<dict>
-
 			<key>UIWindowSceneSessionRoleApplication</key>
 			<array>
-
 				<dict>
-
 					<key>UISceneClassName</key>
 					<string>UIWindowScene</string>
-
 					<key>UISceneConfigurationName</key>
 					<string>flutter</string>
-
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-
 					<key>UISceneStoryboardFile</key>
 					<string>Main</string>
-
 				</dict>
-
 			</array>
-
 		</dict>
-
 	</dict>
 
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -113,24 +102,24 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.pravera.flutter_foreground_task.refresh</string>
+	</array>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-
 	</array>
 
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-
 	</array>
-
 </dict>
 </plist>
