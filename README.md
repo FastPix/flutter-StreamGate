@@ -49,8 +49,8 @@ Before building the project, ensure you have:
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/FastPix/streamgate-flutter.git
-cd streamgate-flutter
+ git clone https://github.com/FastPix/flutter-StreamGate.git
+cd flutter-StreamGate
 flutter pub get
 ```
 
@@ -168,4 +168,3 @@ flutter run
 ## License
 
 MIT License.
-https://github.com/FastPix/flutter-uploads
