@@ -33,7 +33,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       throw Exception("PlaybackId missing");
     }
 
-    return "https://stream.fastpix.io/${widget.playbackId}.m3u8";
+    return "https://stream.fastpix.com/${widget.playbackId}.m3u8";
   }
 
   // SHARE URL (FOR WHATSAPP / CHROME / WEB)
@@ -41,7 +41,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     if (widget.playbackId == null || widget.playbackId!.isEmpty) {
       throw Exception("PlaybackId missing");
     }
-    return "https://play.fastpix.io/?playbackId=${widget.playbackId}"
+    return "https://play.fastpix.com/?playbackId=${widget.playbackId}"
         "&muted=false"
         "&hide-controls=false"
         "&accent-color=ff6100"

@@ -31,7 +31,7 @@ class FastPixUploadService {
     final auth = "Basic ${base64Encode(utf8.encode('$tokenId:$secretKey'))}";
 
     final response = await dio.post(
-      "https://api.fastpix.io/v1/on-demand/upload",
+      "https://api.fastpix.com/v1/on-demand/upload",
       options: Options(
         headers: {
           "Authorization": auth,
@@ -120,7 +120,7 @@ class FastPixUploadService {
 
       try {
         final response = await dio.get(
-          "https://api.fastpix.io/v1/on-demand/$mediaId",
+          "https://api.fastpix.com/v1/on-demand/$mediaId",
           options: Options(
             headers: {
               "Authorization": auth,
